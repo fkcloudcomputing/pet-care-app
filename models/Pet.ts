@@ -6,8 +6,8 @@ export interface Pets extends mongoose.Document {
   owner_name: string;
   species: string;
   age: number;
-  poddy_trained: boolean;
-  diet: string[];
+ // poddy_trained: boolean;
+ // diet: string[];
   image_url: string;
   likes: string[];
   dislikes: string[];
@@ -30,6 +30,10 @@ const PetSchema = new mongoose.Schema({
     required: [true, "Please specify the species of your pet."],
     maxlength: [40, "Species specified cannot be more than 40 characters"],
   },
+animal_type: {
+  type: String,
+  required: [true, "Please specify the animal type."],
+},
   age: {
     type: Number,
   },

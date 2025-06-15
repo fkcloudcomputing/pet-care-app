@@ -11,30 +11,25 @@ type Props = {
 const Index = ({ pets }: Props) => {
   return (
     <>
-      <nav>
-        <div className="logo">
-          <Image src="/pet-logo.png" alt="Pet Logo" width={50} height={50} />
-          <span>Pet Care App</span>
-        </div>
-        <div className="nav-links">
-          <Link href="/" legacyBehavior>
-            <a>Home</a>
-          </Link>
-          <Link href="/add" legacyBehavior>
-            <a>Add Pet</a>
-          </Link>
-        </div>
-      </nav>
+      <div className="filter-bar">
+        <span>Filter by species: </span>
+        <Link href="/"><button>All</button></Link>
+        <Link href="/?animal_type=Dog"><button>Dogs</button></Link>
+        <Link href="/?animal_type=Cat"><button>Cats</button></Link>
+        <Link href="/?animal_type=Hamster"><button>Hamsters</button></Link>
+        <Link href="/?animal_type=Bird"><button>Bird</button></Link>
+      </div>
 
       <main className="grid">
         {pets.map((pet) => (
-  		<div key={String(pet._id)} className="card">
+          <div key={String(pet._id)} className="card">
             <img src={pet.image_url} alt={pet.name} />
             <h5 className="pet-name">{pet.name}</h5>
             <div className="main-content">
               <p className="pet-name">{pet.name}</p>
               <p className="owner">Owner: {pet.owner_name}</p>
-
+		<p className="age">Age: {pet.age}</p>
+		  <p className="species">Species: {pet.species}</p>
               <div className="likes info">
                 <p className="label">Likes</p>
                 <ul>
@@ -53,12 +48,23 @@ const Index = ({ pets }: Props) => {
               </div>
 
               <div className="btn-container">
-                <Link href={{ pathname: "/[id]/edit", query: { id: pet._id } }} legacyBehavior>
-                  <button className="btn edit">Edit</button>
-                </Link>
-                <Link href={{ pathname: "/[id]", query: { id: pet._id } }} legacyBehavior>
-                  <button className="btn view">View</button>
-                </Link>
+                <button
+                  className="btn delete"
+                  onClick={async () => {
+                    if (confirm(`Are you sure you want to delete ${pet.name}?`)) {
+                      const res = await fetch(`/api/pets/${pet._id}`, {
+                        method: "DELETE",
+                      });
+                      if (res.ok) {
+                        window.location.reload();
+                      } else {
+                        alert("Failed to delete the pet.");
+                      }
+                    }
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>
@@ -68,9 +74,13 @@ const Index = ({ pets }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
+export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
   await dbConnect();
-  const result = await Pet.find({});
+
+  const animalType = context.query.animal_type as string | undefined;
+  const filter = animalType ? { animal_type: animalType } : {};
+
+  const result = await Pet.find(filter);
   const pets = result.map((doc) => {
     const pet = doc.toObject();
     return {
@@ -78,6 +88,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
       _id: pet._id.toString(),
     };
   });
+
   return { props: { pets } };
 };
 
