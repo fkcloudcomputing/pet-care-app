@@ -71,7 +71,13 @@ const Index = ({ pets }: Props) => {
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   await dbConnect();
   const result = await Pet.find({});
-  const pets = result.map((doc) => JSON.parse(JSON.stringify(doc)));
+  const pets = result.map((doc) => {
+    const pet = doc.toObject();
+    return {
+      ...pet,
+      _id: pet._id.toString(),
+    };
+  });
   return { props: { pets } };
 };
 
