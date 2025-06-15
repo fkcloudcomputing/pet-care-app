@@ -28,7 +28,7 @@ const Index = ({ pets }: Props) => {
 
       <main className="grid">
         {pets.map((pet) => (
-  		<div key={pet._id} className="card">
+  		<div key={String(pet._id)} className="card">
             <img src={pet.image_url} alt={pet.name} />
             <h5 className="pet-name">{pet.name}</h5>
             <div className="main-content">
