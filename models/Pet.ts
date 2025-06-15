@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-export type Pets = {
-  _id: string;
+export interface Pets extends mongoose.Document {
+  _id: string; // <- explizit!
   name: string;
   owner_name: string;
   species: string;
@@ -51,4 +51,5 @@ const PetSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.models.Pet || mongoose.model("Pet", PetSchema);
+const Pet = mongoose.models.Pet || mongoose.model<Pets>("Pet", PetSchema);
+export default Pet;
