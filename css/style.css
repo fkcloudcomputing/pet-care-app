@@ -1,0 +1,124 @@
+/* Allgemeine Einstellungen */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", "Open Sans", sans-serif;
+}
+
+/*  Navigation */
+nav {
+  background-color: #ffe4e6; /* zartes Rosa */
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+nav .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+nav .logo span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #be123c; /* dunkleres Rosa */
+}
+
+nav .nav-links a {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: #be123c;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav .nav-links a:hover {
+  color: #881337; /* dunkler beim Hover */
+}
+
+/*  Pet Cards */
+.card {
+  width: 300px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  margin: 1rem;
+  background-color: #fff;
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card .main-content {
+  padding: 1rem;
+}
+
+.card h5.pet-name {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.card .owner {
+  color: #555;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Info-Listen */
+.card .info {
+  margin-top: 0.5rem;
+}
+
+.card .info .label {
+  font-weight: bold;
+  color: #444;
+}
+
+.card .info ul {
+  list-style-type: disc;
+  padding-left: 1.2rem;
+  color: #333;
+}
+
+/*  Buttons */
+.btn-container {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+button.btn {
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn.edit {
+  background-color: #16a34a;
+  color: white;
+}
+
+.btn.edit:hover {
+  background-color: #15803d;
+}
+
+.btn.view {
+  background-color: #2563eb;
+  color: white;
+}
+
+.btn.view:hover {
+  background-color: #1d4ed8;
+}
